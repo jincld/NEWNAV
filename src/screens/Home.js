@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Alert, Image } from 'react-native';
-import Buttons from '../components/Buttons';
+import Buttons from '../components/Button';
 import { useFocusEffect } from '@react-navigation/native';
  
 export default function Home({ navigation }) {
@@ -16,7 +16,7 @@ export default function Home({ navigation }) {
   return (
     <View style={styles.container}>
       <Image
-        source={require('../../assets/users.png')}
+        source={require('../../assets/uses.png')}
         style={styles.image}
       />
       <Text style={styles.title}>Bienvenido</Text>

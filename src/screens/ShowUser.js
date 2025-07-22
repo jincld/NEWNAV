@@ -8,7 +8,7 @@ import {
   SafeAreaView,
 } from "react-native";
  
-import CardUser from "../components/Users/CardUser";
+import CardUser from "../components/CardUser";
  
 import useFetchUser from "../hooks/useFetchUser";
 import { useFocusEffect } from "@react-navigation/native";
