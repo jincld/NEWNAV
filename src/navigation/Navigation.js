@@ -5,6 +5,7 @@ import Home from '../screens/Home.js'; // Importa la pantalla de Sesión
 import ShowUser from '../screens/ShowUser.js'; // Importa la pantalla de Sesión
 import AddUser from '../screens/AddUser.js'; // Importa la pantalla de Sesión
 import TabNavigator from './TabNavigator'; // Importa el navegador de pestañas
+import EditUser from "../screens/EditUser.js";
  
 export default function Navigation() {
  
@@ -21,6 +22,7 @@ export default function Navigation() {
         <Stack.Screen name="ShowUser" component={ShowUser} />
         <Stack.Screen name="AddUsers" component={AddUser} />
         <Stack.Screen name="TabNavigator" component={TabNavigator} />
+        <Stack.Screen name="EditUser" component={EditUser} />
       </Stack.Navigator>
     </NavigationContainer>
   );

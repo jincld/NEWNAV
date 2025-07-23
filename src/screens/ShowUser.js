@@ -6,36 +6,61 @@ import {
   FlatList,
   ActivityIndicator,
   SafeAreaView,
+  Alert,
 } from "react-native";
- 
+
 import CardUser from "../components/CardUser";
- 
 import useFetchUser from "../hooks/useFetchUser";
 import { useFocusEffect } from "@react-navigation/native";
- 
+import { useNavigation } from "@react-navigation/native";
+
 const ShowUser = () => {
   const { usuarios, loading, fetchUsuarios } = useFetchUser();
- 
-  // Se ejecuta cada vez que esta pantalla se enfoca
+
+  const navigation = useNavigation();
+
+  // Eliminar usuario
+  const handleDelete = async (id) => {
+    try {
+      const response = await fetch(`https://retoolapi.dev/zZhXYF/movil/${id}`, {
+        method: "DELETE",
+      });
+
+      if (response.ok) {
+        Alert.alert("Eliminado", "Usuario eliminado correctamente");
+        fetchUsuarios();
+      } else {
+        Alert.alert("Error", "No se pudo eliminar el usuario");
+      }
+    } catch (error) {
+      console.error("Error al eliminar:", error);
+    }
+  };
+
+  // Editar usuario 
+  const handleEdit = (user) => {
+    navigation.navigate("EditUser", { user });
+  };
+
   useFocusEffect(
     useCallback(() => {
       fetchUsuarios();
     }, [])
   );
- 
+
   return (
     <SafeAreaView style={styles.container}>
       <Text style={styles.title}>Lista de Usuarios</Text>
       <Text style={styles.subtitle}>
         Consulta los usuarios registrados desde la API
       </Text>
- 
+
       {!loading && (
         <Text style={styles.counterText}>
           Total de usuarios: {usuarios.length}
         </Text>
       )}
- 
+
       {loading ? (
         <ActivityIndicator
           size="large"
@@ -46,14 +71,20 @@ const ShowUser = () => {
         <FlatList
           data={usuarios}
           keyExtractor={(user) => user.id.toString()}
-          renderItem={({ item }) => <CardUser user={item} />}
+          renderItem={({ item }) => (
+            <CardUser
+              user={item}
+              onDelete={handleDelete}
+              onEdit={handleEdit}
+            />
+          )}
           contentContainerStyle={styles.listContainer}
         />
       )}
     </SafeAreaView>
   );
 };
- 
+
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -85,27 +116,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
     marginBottom: 10,
   },
-  card: {
-    backgroundColor: "#FFF",
-    borderRadius: 12,
-    padding: 20,
-    marginVertical: 10,
-    elevation: 4,
-    shadowColor: "#000",
-    shadowOpacity: 0.2,
-    shadowOffset: { width: 1, height: 2 },
-    shadowRadius: 4,
-  },
-  cardTitle: {
-    fontSize: 20,
-    fontWeight: "bold",
-    color: "#5C3D2E",
-    marginBottom: 5,
-  },
-  cardText: {
-    fontSize: 16,
-    color: "#3B2C24",
-  },
 });
- 
+
 export default ShowUser;
